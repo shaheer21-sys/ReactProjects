@@ -1,82 +1,109 @@
 import { useEffect, useState } from "react";
-import Card from "./Card";
-import Axios from 'axios';
+// import Card from "./Card";
+// import Axios from 'axios';
+import SearchBox from "./component/SerachBox";
+import MovieList from "./component/MovieList";
 
 
-function SuperHeros (){
-  const [hero, setHero] = useState(["black panther" , "Ironman"]);
-  const [name , setName] = useState (() => "antman");
+// function SuperHeros (){
+//   const [hero, setHero] = useState(["black panther" , "Ironman"]);
+//   const [name , setName] = useState (() => "antman");
 
-  const addNames = () =>{
-    setHero([...hero, name])
-    setName("")
+//   const addNames = () =>{
+//     setHero([...hero, name])
+//     setName("")
 
-  }
+//   }
 
-  return (
-    <div>
+//   return (
+//     <div>
 
-      <input type="text" 
-      value={name}
-      onChange={(e) => setName(e.target.value)}/>
-      <button onClick={addNames}>Add hero</button>
+//       <input type="text" 
+//       value={name}
+//       onChange={(e) => setName(e.target.value)}/>
+//       <button onClick={addNames}>Add hero</button>
 
-      <ul>
-        {hero.map(
-          (h) => ( <li key={h}>{h}</li> )
-        )}
-      </ul>
-    </div>
-  )
-}
+//       <ul>
+//         {hero.map(
+//           (h) => ( <li key={h}>{h}</li> )
+//         )}
+//       </ul>
+//     </div>
+//   )
+// }
 
 
-function Counter(){
-  let [count , setCount] = useState(0);
+// function Counter(){
+//   let [count , setCount] = useState(0);
 
-  function plus() {
-    setCount(count + 1 )
-  }
+//   function plus() {
+//     setCount(count + 1 )
+//   }
 
-  function minus() {
-    setCount(count - 1 )
-  }
+//   function minus() {
+//     setCount(count - 1 )
+//   }
 
-  return(
-    <div>
-      <h2>count :{count} </h2>
-      <button onClick={plus}  style={{width:'200px', fontSize:'40px', borderRadius:'15px', border:'none', color:'white',margin:'10px', backgroundColor:'red'}}>+</button>
-      <button onClick={minus} style={{width:'200px', fontSize:'40px', borderRadius:'15px', border:'none', color:'white',margin:'10px', backgroundColor:'blue'}}>-</button>
-    </div>
-  )
-}
+//   return(
+//     <div>
+//       <h2>count :{count} </h2>
+//       <button onClick={plus}  style={{width:'200px', fontSize:'40px', borderRadius:'15px', border:'none', color:'white',margin:'10px', backgroundColor:'red'}}>+</button>
+//       <button onClick={minus} style={{width:'200px', fontSize:'40px', borderRadius:'15px', border:'none', color:'white',margin:'10px', backgroundColor:'blue'}}>-</button>
+//     </div>
+//   )
+// }
+
+
 
  
 
 function App() {
-  const [details, setDetails] = useState({})
+  // const [details, setDetails] = useState({})
+  const [searchValue,setSearchValue] = useState("");
+  const [movies,setMovies] = useState([]);
 
+  const getMovies = async (searchValue) => {
+    const api = await fetch(`http://www.omdbapi.com/?s=${searchValue}&apikey=5090f9ca`);
+    const data = await api.json();
+    console.log(data.Search);
 
-  //function to fetch data
-  const fetchDetails = async () => {
-   //{data}-destructuring because to target a specific property in the json received 
-    const {data} = await Axios.get('https://randomuser.me/api/' , {})
-    console.log("response" , data);
-    const details = data.results[0];
-    setDetails(details);
+    setMovies(data.Search);
   }
 
-  let list = ["jhonny", "shreemith"]
 
-  useEffect(() => {fetchDetails();} , [])
+  useEffect(() => {
+    getMovies(searchValue);
+  },[searchValue]);
+
+  // useEffect(() => {getMovies()},[]);
+  // //function to fetch data
+  // const fetchDetails = async () => {
+  //  //{data}-destructuring because to target a specific property in the json received 
+  //   const {data} = await Axios.get('https://randomuser.me/api/' , {})
+  //   console.log("response" , data);
+  //   const details = data.results[0];
+  //   setDetails(details);
+  // }
+
+  // let list = ["jhonny", "shreemith"]
+
+  // useEffect(() => {fetchDetails();} , [])
   return (
     <>
-    <h1>hello world</h1>
+    {/* <h1>hello world</h1>
     <Counter/>
     <SuperHeros/>
     <Card myName="shaheer" myList={list} details={details} />
-    <button onClick={fetchDetails}>Get Details</button>
+    <button onClick={fetchDetails}>Get Details</button> */}
 
+    
+
+    <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
+    <h1>{searchValue}</h1>
+
+    <MovieList movies={movies}/> 
+    
+      
     </>
   );
 }
