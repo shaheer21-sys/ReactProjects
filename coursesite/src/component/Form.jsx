@@ -1,11 +1,14 @@
 import React from 'react';
 import {FcGoogle} from 'react-icons/fc';
 import {GoogleAuthProvider, signInWithPopup} from 'firebase/auth';
-// import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import {auth} from '../utils/firebase';
 
-import {auth} from '../utils/firebase'
+
+
 function Form() {
-  
+
+  const route = useNavigate();
   const googleProvider = new GoogleAuthProvider();
 
  
@@ -15,6 +18,7 @@ function Form() {
     try {
       const result = await signInWithPopup(auth,googleProvider)
       console.log(result.user);
+      route("/home")
     } catch (error) {
       console.log(error);
     }
@@ -36,11 +40,11 @@ function Form() {
             </p>
 
 
-            {/* <Link to={"/home"}> */}
+
             <button className='btn-google' onClick={GoogleLogin}>
               <FcGoogle size={20}/> Sign in with google 
             </button>
-            {/* </Link> */}
+
             
         </form>
     </div>

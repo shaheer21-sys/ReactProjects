@@ -26,7 +26,7 @@ function Nav() {
               <Link to={"/home"}>
               <img className='profile-pic' src={user.photoURL} alt="avatar" referrerPolicy='no-referrer'/>
               </Link>
-              <p style={{color:'white',margin:'0'}}>{user.displayName}</p>
+              {/* <p style={{color:'white',margin:'0'}}>{user.displayName}</p> */}
             </div>
           )}
 

@@ -26,7 +26,7 @@ function App() {
 
   return (
     <ThemeContext.Provider value={{theme , toogleTheme}}>
-    {/* <div className="main" id={theme}> */}
+
     
 
 
@@ -51,7 +51,7 @@ function App() {
 
       </div>
 
-    {/* </div> */}
+
    
     
 
