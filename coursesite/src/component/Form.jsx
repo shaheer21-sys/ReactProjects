@@ -1,6 +1,7 @@
 import React from 'react';
 import {FcGoogle} from 'react-icons/fc';
 import {GoogleAuthProvider, signInWithPopup} from 'firebase/auth';
+// import { Link } from 'react-router-dom';
 
 import {auth} from '../utils/firebase'
 function Form() {
@@ -34,9 +35,13 @@ function Form() {
                 <a href="#">Forget Password?</a>
             </p>
 
+
+            {/* <Link to={"/home"}> */}
             <button className='btn-google' onClick={GoogleLogin}>
               <FcGoogle size={20}/> Sign in with google 
             </button>
+            {/* </Link> */}
+            
         </form>
     </div>
   )
