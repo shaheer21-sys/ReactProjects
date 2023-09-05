@@ -1,19 +1,21 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import './App.css';
 import Form from './component/Form';
 import ReactSwitch from 'react-switch';
 import Nav from './component/Nav';
-import { Route,Routes} from 'react-router-dom';
+import { Route,Routes, useNavigate} from 'react-router-dom';
 import Home from './pages/Home';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {auth} from './utils/firebase';
+
+import Login from './component/Login';
+import Register from './component/Register';
 
 export const ThemeContext = createContext(null);
 
 function App() {
 
   const [theme, setTheme] = useState("dark");
-
   const toogleTheme = () => {
     setTheme(
       (curr) => (curr === "light" ? "dark" : "light")
@@ -21,6 +23,10 @@ function App() {
   }
 
  const [user,loading] = useAuthState(auth);
+
+ const route = useNavigate();
+
+//  useEffect(() => {route("/form/login")},[route])
 
 
 
@@ -35,9 +41,12 @@ function App() {
         <Nav/>
 
         <Routes>
-         <Route path='/home' element={<Home/>}/>
-         <Route path='/login' element={<Form/>}/>
-          
+          {/* <Route > */}
+          <Route path='/home' element={<Home/>}/>
+          <Route path='/form' element={<Form/>}>
+                <Route path="login" element={<Login/>}/>
+                <Route path="signup" element={<Register/>}/>
+          </Route>
         </Routes>
 
         

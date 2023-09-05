@@ -11,14 +11,15 @@ function Nav() {
     
     <nav className='nav'>
 
-        <Link to="/home" className='site-name'>Site Name </Link>
+        <Link to="/home" className='site-name'>Learn with Sha</Link>
 
         <ul>
           <CustomLink to="/home">Home</CustomLink>
 
           {!user &&(
-            <CustomLink to="/login">Login</CustomLink>
-          )}
+            (<CustomLink to="/form/login">Login</CustomLink>) 
+            // ||(<CustomLink to="/form/signup">Login</CustomLink>)
+          ) }
           
 
           {user && (
@@ -43,7 +44,7 @@ function Nav() {
 }
 
 
-const CustomLink = ({to,children,...props}) => {
+export const CustomLink = ({to,children,...props}) => {
  const reolvedPath = useResolvedPath(to);
  const isActive = useMatch({path: reolvedPath.pathname, end : true})
   return(

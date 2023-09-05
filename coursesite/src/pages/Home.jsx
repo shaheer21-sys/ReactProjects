@@ -13,7 +13,7 @@ function Home() {
 
  if(loading) return <h1>Loading...</h1>
 
- if(!user) return route("/login");
+ if(!user) return route("/form/login");
 
   return (
     <div className='home'>

@@ -1,15 +1,20 @@
 import React from 'react';
+import  {useEffect} from 'react';
 import {FcGoogle} from 'react-icons/fc';
 import {GoogleAuthProvider, signInWithPopup} from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, Outlet, Route,Routes, useNavigate } from 'react-router-dom';
 import {auth} from '../utils/firebase';
-
+import { useAuthState } from 'react-firebase-hooks/auth';
+import Login from './Login';
+import Register from './Register';
 
 
 function Form() {
 
   const route = useNavigate();
   const googleProvider = new GoogleAuthProvider();
+  const [user, loading] = useAuthState(auth);
+
 
  
   const GoogleLogin = async (e) => {
@@ -24,20 +29,39 @@ function Form() {
     }
   }
 
+  useEffect(() => {
+    if(user){
+      route('/home')
+    }
+    // else if(!user){
+    //   route("/form/login")
+    // }
+    else{
+      console.log("sus");
+    }
+  },[user])
+
+
+  // useEffect(() => {route("/form/login")},[route])
+
+
 
   return (
     <div className="main">
-        <p className='sign' align="center">Sign in</p>
 
         <form className='form1'>
-         
-            <input className="username" type="text" placeholder='Email id'/>
-            <input className="password" type="password" placeholder='Password'/>
-            <a className='submit' href='#' align="center" >Sign in</a>
 
-            <p  className="forgot" align="center" >
-                <a href="#">Forget Password?</a>
-            </p>
+
+              
+
+          {/* <Link to={"/form/login"} style={{color:'white'}}>login</Link> */}
+                
+
+          <Outlet/>
+         
+         
+            {/* <Login/> */}
+            {/* <Register/> */}
 
 
 
